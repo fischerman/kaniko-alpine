@@ -1,7 +1,6 @@
-FROM gcr.io/kaniko-project/executor@sha256:dae66b504b8c8252c02e084383a42c00e8fff1d38120c0b789cf27e9ab0864fa as kaniko
+FROM gcr.io/kaniko-project/executor@sha256:2041c6969749e99cf1c66ad24437631f31ebe0965fd44d5852640db3e0b48089
 
-FROM alpine
-COPY --from=kaniko /kaniko /kaniko
+ADD entrypoint.sh /kaniko/
+#RUN chmod +x /kaniko/entrypoint.sh
 
-# COPY envs from original images
-ENV HOME=/root USER=/root SSL_CERT_DIR=/kaniko/ssl/certs
+ENTRYPOINT [ "/kaniko/entrypoint.sh" ]
